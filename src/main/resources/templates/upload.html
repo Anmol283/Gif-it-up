@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>GIF-IT-UP 🎨</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico?v=1}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/favicon.ico?v=1}">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #ffd700;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .subtitle {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        /* Main container */
+        .main-content {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: stretch; /* make both boxes same height */
+        gap: 2rem;
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        }
+.upload-container,
+.preview-container {
+    max-width: 420px;          /* a bit narrower */
+    padding: 1.2rem;           /* less padding */
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 8px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;              /* shrink to fit */
+    min-height: 160px;         /* not too tiny */
+}
+
+
+        .box {
+
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* vertical center */
+            align-items: center;
+            min-height: 180px;
+            text-align: center;
+        }
+
+        .box h2 {
+            font-size: 1rem;
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Upload area */
+            .upload-area {
+                padding: 2rem;
+                width: 100%;         /* full width of container */
+                box-sizing: border-box; /* don't let padding break layout */
+                text-align: center;
+            }
+
+
+        .upload-area:hover {
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+
+        .upload-text {
+            font-size: 0.8rem;
+            padding: 1rem;
+            border: 2px dashed #aaa;
+            border-radius: 12px;
+            display: inline-block;
+          }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Create GIF button */
+        .btn {
+            margin-top: 1.5rem;
+            padding: 10px 18px;
+            border-radius: 12px;
+            background: #ff0080;
+            color: white;
+            cursor: pointer;
+            border: none;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 12px #ff0080;
+        }
+
+        /* GIF Preview */
+        .gif-output {
+            max-width: 250px;
+            border: 3px solid #ffd700;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .preview-placeholder {
+            color: #aaa;
+            font-size: 0.8rem;
+        }
+
+        /* Glow animation */
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #ff0080, 0 0 10px #ff0080; }
+            to   { text-shadow: 0 0 15px #ff0080, 0 0 25px #ff0080; }
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            padding: 1rem;
+            font-size: 0.7rem;
+            color: #aaa;
+            text-align: center;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <h1 class="page-title">✨ GIF-IT-UP ✨</h1>
+    <p class="subtitle">Where every frame speaks.</p>
+</header>
+
+<div class="main-content">
+    <!-- Upload Box -->
+    <section class="box">
+        <h2>Upload Your Frames 🖼️</h2>
+        <form method="post" enctype="multipart/form-data" th:action="@{/create-gif}">
+            <label for="fileInput" class="upload-area">
+                <div class="upload-text" id="fileLabelText">📂 Drop files or click to select</div>
+            </label>
+            <input type="file" id="fileInput" name="images" accept="image/*" multiple>
+            <button type="submit" class="btn">🚀 Create GIF</button>
+        </form>
+    </section>
+
+    <!-- Preview Box -->
+    <section class="box">
+        <h2>✨ Your Generated GIF ✨</h2>
+        <div th:if="${gifUrl != null}" style="display:flex; flex-direction:column; align-items:center; justify-content:center; flex:1;">
+            <img th:src="@{${gifUrl}}" alt="Generated GIF" class="gif-output">
+            <a th:href="@{${gifUrl}}" download="my-gif.gif" class="btn">⬇ Download GIF</a>
+        </div>
+        <div th:unless="${gifUrl}" class="preview-placeholder">
+            🎬 Your GIF will appear here
+        </div>
+    </section>
+</div>
+
+<footer>
+    <p>© 2025 GIF-IT-UP</p>
+</footer>
+
+<script>
+    document.getElementById("fileInput").addEventListener("change", function () {
+        const count = this.files.length;
+        const label = document.getElementById("fileLabelText");
+
+        if (count > 0) {
+            label.textContent = count + " file" + (count > 1 ? "s" : "") + " selected";
+        } else {
+            label.textContent = "📂 Drop files or click to select";
+        }
+    });
+</script>
+
+</body>
+</html>
