@@ -43,20 +43,40 @@ No fancy databases. No serious business logic. Just a way to mess around and mak
 
 ```
 Gif-it-up/
-├── 📂 src/
-│ ├── 📂 main/
-│ │ ├── 📂 java/com/example/gifmaker/
-│ │ │ ├── controller/ # Controllers for handling upload & GIF generation
-│ │ │ ├── service/ # Services for image/GIF processing
-│ │ │ └── GifMakerApplication.java # Main Spring Boot application
-│ │ └── 📂 resources/
-│ │ ├── application.properties # Configurations
-│ │ ├── static/ # CSS, JS, images
-│ │ └── templates/ # Thymeleaf templates
-├── 📄 pom.xml # Maven dependencies
-├── 📄 render.yaml # Deployment config for Render
-├── 📄 system.properties # Runtime Java version (21)
-└── 📄 README.md # Project documentation
+├── .gitattributes
+├── .gitignore
+├── .mvn
+    └── wrapper
+    │   └── maven-wrapper.properties
+├── Dockerfile
+├── LICENSE
+├── README.md
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+├── render.yaml
+├── src
+    ├── main
+    │   ├── java
+    │   │   └── com
+    │   │   │   └── example
+    │   │   │       └── gifmaker
+    │   │   │           ├── GifController.java
+    │   │   │           └── GifmakerApplication.java
+    │   └── resources
+    │   │   ├── application.properties
+    │   │   ├── static
+    │   │       ├── favicon.ico
+    │   │       └── output.gif
+    │   │   └── templates
+    │   │       └── upload.html
+    └── test
+    │   └── java
+    │       └── com
+    │           └── example
+    │               └── gifmaker
+    │                   └── GifmakerApplicationTests.java
+└── system.properties
 ```
 
 ---
