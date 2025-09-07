@@ -93,7 +93,7 @@ Gif-it-up/
 
 1. **Clone the Repository**:
    ```bash
-   git clone [https://github.com/Anmol283/E-commerceMiniStore](https://github.com/Anmol283/Gif-it-up)
+   git clone https://github.com/Anmol283/Gif-it-up
    cd  Gif-it-up
    ```
 
